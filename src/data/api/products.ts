@@ -1,5 +1,5 @@
 export async function getProducts() {
-  const res = await fetch("https://api.npoint.io/a69824ca4c40ac8e783d");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`);
 
   if (!res.ok) {
     throw new Error("Failed to fetch products");

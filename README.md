@@ -18,10 +18,10 @@ Asegúrate de tener Node.js instalado en tu sistema.
 
 Clona el repositorio:
 
-git clone [URL_DEL_REPOSITORIO]
+git clone https://github.com/Intime-SA/cross-up-entrega
 Navega al directorio del proyecto:
 
-cd [NOMBRE_DEL_DIRECTORIO]
+cd nextjs-ecommerce-full
 Instala las dependencias:
 
 npm install
@@ -38,8 +38,11 @@ Componentes reutilizables como tarjetas de productos y carruseles.
 Integración de SweetAlert2 para notificaciones mejoradas al agregar productos al carrito.
 Temporizador de oferta para crear urgencia en las compras.
 Recomendaciones de productos relacionados.
-Próximos Pasos
-Implementar autenticación de usuarios.
-Agregar una pasarela de pago.
 Mejorar la gestión del estado con Redux Toolkit.
 Implementar pruebas unitarias y de integración.
+
+DESARROLLOS NO REQUERIDOS:
+
+1. Implementacion de Server Components para el llamado a la API
+2. Clean Arquitecture
+3. FullBack Image para imagenes con respuesta 404, not found
