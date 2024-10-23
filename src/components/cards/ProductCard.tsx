@@ -30,32 +30,7 @@ import { ImageWithFallback } from "./ImageWithFail";
 import { ProductCardSkeleton } from "../skeletons/ProductCardSkeleton";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-
-interface RelatedProduct {
-  id: string;
-  name: string;
-  images: string[];
-  regularPrice: number;
-  promotionalPrice: number | null;
-  availableStock: number;
-  shortDescription: string;
-}
-
-interface ProductCardProps {
-  product: {
-    title: string;
-    shooter: {
-      name: string;
-      images: string[];
-      regularPrice: number;
-      promotionalPrice: number | null;
-      shortDescription: string;
-    };
-    products: RelatedProduct[];
-    description: string;
-    offerExpirationTime: number;
-  };
-}
+import { ProductCardProps, RelatedProduct } from "@/domain/definitions";
 
 export default function ProductCard({ product }: ProductCardProps) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);

@@ -3,33 +3,7 @@
 import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import { ProductCardSkeleton } from "../skeletons/ProductCardSkeleton";
-
-interface Product {
-  title: string;
-  shooter: {
-    id: string;
-    name: string;
-    images: string[];
-    regularPrice: number;
-    promotionalPrice: number | null;
-    shortDescription: string;
-  };
-  products: Array<{
-    id: string;
-    name: string;
-    images: string[];
-    regularPrice: number;
-    promotionalPrice: number | null;
-    availableStock: number;
-    shortDescription: string;
-  }>;
-  description: string;
-  offerExpirationTime: number;
-}
-
-interface ProductListProps {
-  initialProducts: Product[];
-}
+import { Product, ProductListProps } from "@/domain/definitions";
 
 const ProductList = ({ initialProducts }: ProductListProps) => {
   const [products, setProducts] = useState<Product[]>(initialProducts);

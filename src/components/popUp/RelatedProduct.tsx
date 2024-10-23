@@ -11,27 +11,10 @@ import { Button } from "@/components/ui/button";
 import { useAppDispatch } from "@/redux/hooks";
 import { addToCart } from "@/redux/features/cartSlice";
 import { Check, Plus } from "lucide-react";
-
-interface RelatedProduct {
-  id: string;
-  name: string;
-  images: string[];
-  regularPrice: number;
-  promotionalPrice: number | null;
-  availableStock: number;
-  shortDescription: string;
-}
-
-interface RelatedProductsPopupProps {
-  isOpen: boolean;
-  onClose: () => void;
-  addedProduct: {
-    name: string;
-    image: string;
-    price: number;
-  };
-  relatedProducts: RelatedProduct[];
-}
+import {
+  RelatedProduct,
+  RelatedProductsPopupProps,
+} from "@/domain/definitions";
 
 export default function RelatedProductsPopup({
   isOpen,
