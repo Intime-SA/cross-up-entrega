@@ -28,6 +28,8 @@ import {
 } from "@/components/ui/carousel";
 import { ImageWithFallback } from "./ImageWithFail";
 import { ProductCardSkeleton } from "../skeletons/ProductCardSkeleton";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 interface RelatedProduct {
   id: string;
@@ -61,6 +63,8 @@ export default function ProductCard({ product }: ProductCardProps) {
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const MySwal = withReactContent(Swal);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -105,6 +109,13 @@ export default function ProductCard({ product }: ProductCardProps) {
       })
     );
     setIsPopupOpen(true);
+    MySwal.fire({
+      icon: "success",
+      title: "Producto añadido al carrito",
+      text: `${product.title} ha sido agregado exitosamente`,
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   const handleAddRelatedProduct = (relatedProduct: RelatedProduct) => {
@@ -116,6 +127,14 @@ export default function ProductCard({ product }: ProductCardProps) {
         quantity: 1,
       })
     );
+    MySwal.fire({
+      icon: "success",
+      title: "Producto añadido al carrito",
+      text: `${relatedProduct.name} ha sido agregado exitosamente`,
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    setIsPopupOpen(false);
   };
 
   if (!isLoaded) {
