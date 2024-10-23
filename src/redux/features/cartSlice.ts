@@ -23,6 +23,10 @@ const loadCartState = (): CartState => {
 
 const initialState: CartState = loadCartState();
 
+const saveCartState = (state: CartState) => {
+  localStorage.setItem("cart", JSON.stringify(state));
+};
+
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -36,9 +40,11 @@ export const cartSlice = createSlice({
       } else {
         state.items.push({ ...action.payload, quantity: 1 });
       }
+      saveCartState(state); // Guardar en localStorage
     },
     removeFromCart: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
+      saveCartState(state); // Guardar en localStorage
     },
     updateQuantity: (
       state,
@@ -47,10 +53,12 @@ export const cartSlice = createSlice({
       const item = state.items.find((item) => item.id === action.payload.id);
       if (item) {
         item.quantity = action.payload.quantity;
+        saveCartState(state); // Guardar en localStorage
       }
     },
     clearCart: (state) => {
       state.items = [];
+      saveCartState(state); // Guardar en localStorage
     },
   },
 });
