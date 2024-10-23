@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
+import { ProductCardSkeleton } from "../skeletons/ProductCardSkeleton";
 
 interface Product {
   title: string;
@@ -27,6 +28,11 @@ interface Product {
 
 const ProductList = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +47,16 @@ const ProductList = () => {
 
     fetchData();
   }, []);
+
+  if (!isClient) {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {Array.from({ length: 8 }).map((_, index) => (
+          <ProductCardSkeleton key={index} />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">

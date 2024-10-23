@@ -1,13 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  ChevronLeft,
-  ChevronRight,
-  ShoppingCart,
-  Plus,
-  Check,
-} from "lucide-react";
+import { ShoppingCart, Plus, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -33,6 +27,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { ImageWithFallback } from "./ImageWithFail";
+import { ProductCardSkeleton } from "../skeletons/ProductCardSkeleton";
 
 interface RelatedProduct {
   id: string;
@@ -61,11 +56,15 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
 
   useEffect(() => {
     console.log("Current cart state:", cartItems);
@@ -119,20 +118,24 @@ export default function ProductCard({ product }: ProductCardProps) {
     );
   };
 
+  if (!isLoaded) {
+    return <ProductCardSkeleton />;
+  }
+
   return (
     <>
       <Card className="w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-md transition-transform duration-300 hover:shadow-2xl hover:scale-105 flex flex-col justify-between h-full">
         <CardHeader className="p-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
           <div className="relative h-64 w-full">
             <img
-              src={product.shooter.images[currentImageIndex]}
-              alt={`${product.shooter.name} - Image ${currentImageIndex + 1}`}
+              src={product.shooter.images[0]}
+              alt={`${product.shooter.name}`}
               className="absolute inset-0 w-full h-full object-cover"
             />
           </div>
         </CardHeader>
         <CardContent className="p-6">
-          <CardTitle className="text-xl font-semibold mb-2">
+          <CardTitle className="text-xl font-semibold mb-2 text-foreground dark:text-white">
             {product.title}
           </CardTitle>
           <p className="text-sm text-gray-600 mb-4">
@@ -180,7 +183,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 />
               </div>
               <div className="flex-grow">
-                <h3 className="text-lg font-semibold text-gray-900">
+                <h3 className="text-xl font-semibold mb-2 text-foreground dark:text-white">
                   {product.title}
                 </h3>
                 <p className="mt-1 text-sm text-gray-500">

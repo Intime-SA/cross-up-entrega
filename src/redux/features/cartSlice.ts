@@ -11,9 +11,17 @@ interface CartState {
   items: CartItem[];
 }
 
-const initialState: CartState = {
-  items: [],
+const loadCartState = (): CartState => {
+  if (typeof window !== "undefined") {
+    const savedState = localStorage.getItem("cart");
+    if (savedState) {
+      return JSON.parse(savedState);
+    }
+  }
+  return { items: [] };
 };
+
+const initialState: CartState = loadCartState();
 
 export const cartSlice = createSlice({
   name: "cart",
