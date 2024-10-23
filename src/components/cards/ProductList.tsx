@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
+
+import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import { ProductCardSkeleton } from "../skeletons/ProductCardSkeleton";
 
@@ -26,29 +27,20 @@ interface Product {
   offerExpirationTime: number;
 }
 
-const ProductList = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isClient, setIsClient] = useState(false);
+interface ProductListProps {
+  initialProducts: Product[];
+}
+
+const ProductList = ({ initialProducts }: ProductListProps) => {
+  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    setProducts(initialProducts);
+    setIsLoading(false);
+  }, [initialProducts]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data: Product[] = await fetch(
-        "https://api.npoint.io/a69824ca4c40ac8e783d"
-      )
-        .then((res) => res.json())
-        .catch((err) => console.error(err));
-
-      setProducts(data);
-    };
-
-    fetchData();
-  }, []);
-
-  if (!isClient) {
+  if (isLoading) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {Array.from({ length: 8 }).map((_, index) => (
@@ -59,13 +51,10 @@ const ProductList = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8 text-center">Product List</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {products.map((product, index) => (
-          <ProductCard key={index} product={product} />
-        ))}
-      </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {products.map((product, index) => (
+        <ProductCard key={index} product={product} />
+      ))}
     </div>
   );
 };

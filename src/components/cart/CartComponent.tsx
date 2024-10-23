@@ -17,13 +17,15 @@ import { removeFromCart, updateQuantity } from "@/redux/features/cartSlice";
 
 export default function CartComponent() {
   const [isOpen, setIsOpen] = useState(false);
-  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const cartItems = useSelector((state: RootState) => state.cart.items) || [];
   const dispatch = useDispatch();
 
+  // Calcular el total de items y el total de precio
   const totalItems = cartItems.reduce(
     (total, item) => total + item.quantity,
     0
   );
+
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0

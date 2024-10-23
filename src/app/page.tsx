@@ -1,9 +1,14 @@
 import ProductList from "@/components/cards/ProductList";
+import { getProducts } from "@/data/api/products";
 
-export default function Home() {
+export default async function ProductsPage() {
+  const products = await getProducts();
+  console.log(products);
+
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      <ProductList />
-    </main>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8 text-center">Product List</h1>
+      <ProductList initialProducts={products} />
+    </div>
   );
 }
