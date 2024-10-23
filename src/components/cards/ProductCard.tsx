@@ -73,7 +73,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           100
       )
     : 0;
-
   const handleAddToCart = () => {
     dispatch(
       addToCart({
@@ -90,6 +89,14 @@ export default function ProductCard({ product }: ProductCardProps) {
       text: `${product.title} ha sido agregado exitosamente`,
       showConfirmButton: false,
       timer: 1500,
+      toast: true,
+      position: "bottom-end",
+      showClass: {
+        popup: "animate__animated animate__fadeInUp",
+      },
+      hideClass: {
+        popup: "animate__animated animate__fadeOutDown",
+      },
     });
   };
 
@@ -108,6 +115,14 @@ export default function ProductCard({ product }: ProductCardProps) {
       text: `${relatedProduct.name} ha sido agregado exitosamente`,
       showConfirmButton: false,
       timer: 1500,
+      toast: true,
+      position: "bottom-end",
+      showClass: {
+        popup: "animate__animated animate__fadeInUp",
+      },
+      hideClass: {
+        popup: "animate__animated animate__fadeOutDown",
+      },
     });
     setIsPopupOpen(false);
   };
