@@ -19,18 +19,13 @@ import {
 } from "@/components/ui/dialog";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addToCart } from "@/redux/features/cartSlice";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import { ImageWithFallback } from "./ImageWithFail";
+
 import { ProductCardSkeleton } from "../skeletons/ProductCardSkeleton";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { ProductCardProps, RelatedProduct } from "@/domain/definitions";
+import Image from "next/image";
+import { ProductCarousel } from "./ProductCarrousel";
 
 export default function ProductCard({ product }: ProductCardProps) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -133,7 +128,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <>
-      <Card className="w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-md transition-transform duration-300 hover:shadow-2xl hover:scale-105 flex flex-col justify-between h-full">
+      <Card className="w-full max-w-md mx-auto overflow-hidden rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex flex-col justify-between h-full">
         <CardHeader className="p-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
           <div className="relative h-48 sm:h-64 w-full">
             <img
@@ -190,11 +185,14 @@ export default function ProductCard({ product }: ProductCardProps) {
             </DialogHeader>
             <div className="mt-4 border-b pb-4 px-4 sm:px-0">
               <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-4">
-                <div className="flex-shrink-0">
-                  <img
+                <div className="flex-shrink-0 w-48 h-48 sm:w-56 sm:h-56">
+                  <Image
                     src={product.shooter.images[0]}
                     alt={product.title}
-                    className="h-24 w-24 sm:h-32 sm:w-32 rounded-md object-cover"
+                    width={224}
+                    height={224}
+                    className="rounded-md object-cover w-full h-full"
+                    priority
                   />
                 </div>
                 <div className="flex-grow text-center sm:text-left">
@@ -232,54 +230,10 @@ export default function ProductCard({ product }: ProductCardProps) {
               <h6>Queda poco tiempo... {formatTime(timeLeft)}!</h6>
             </div>
             <div className="mt-4 px-4 sm:px-0">
-              <Carousel className="w-full max-w-[250px] sm:max-w-xs md:max-w-sm lg:max-w-md mx-auto">
-                <CarouselContent>
-                  {product.products.map((relatedProduct) => (
-                    <CarouselItem key={relatedProduct.id}>
-                      <div className="p-1">
-                        <Card>
-                          <CardContent className="flex flex-col items-center p-4 sm:p-6">
-                            <ImageWithFallback
-                              src={relatedProduct.images[0]}
-                              alt={relatedProduct.name}
-                              className="w-full h-24 sm:h-32 object-cover mb-3 sm:mb-4 rounded-md"
-                            />
-                            <h5 className="text-xs sm:text-sm font-semibold text-center mb-2">
-                              {relatedProduct.name}
-                            </h5>
-                            <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">
-                              $
-                              {(
-                                relatedProduct.promotionalPrice ||
-                                relatedProduct.regularPrice
-                              ).toFixed(2)}
-                            </p>
-                            <Button
-                              size="sm"
-                              className="w-full text-xs sm:text-sm"
-                              onClick={() =>
-                                handleAddRelatedProduct(relatedProduct)
-                              }
-                            >
-                              <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />{" "}
-                              Agregar
-                            </Button>
-                            {relatedProduct.availableStock <= 5 && (
-                              <p className="text-[10px] sm:text-xs text-red-500 mt-2">
-                                ¡ÚLTIMAS UNIDADES!
-                              </p>
-                            )}
-                          </CardContent>
-                        </Card>
-                      </div>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <div className="hidden md:block">
-                  <CarouselPrevious />
-                  <CarouselNext />
-                </div>
-              </Carousel>
+              <ProductCarousel
+                products={product.products}
+                handleAddRelatedProduct={handleAddRelatedProduct}
+              />
             </div>
           </div>
         </DialogContent>

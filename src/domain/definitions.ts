@@ -67,3 +67,11 @@ export interface RelatedProductsPopupProps {
   };
   relatedProducts: RelatedProduct[];
 }
+
+export interface ImageWithFallbackProps {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  className?: string;
+}
