@@ -120,9 +120,9 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <>
-      <Card className="w-full max-w-md mx-auto overflow-hidden rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex flex-col justify-between h-full">
+      <Card className="w-full max-w-[300px] mx-auto overflow-hidden rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex flex-col justify-between h-full">
         <CardHeader className="p-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
-          <div className="relative h-48 sm:h-64 w-full">
+          <div className="relative h-[200px] w-full">
             <img
               src={product.shooter.images[0]}
               alt={`${product.shooter.name}`}
@@ -130,39 +130,39 @@ export default function ProductCard({ product }: ProductCardProps) {
             />
           </div>
         </CardHeader>
-        <CardContent className="p-4 sm:p-6">
-          <CardTitle className="text-lg sm:text-xl font-semibold mb-2 text-foreground dark:text-white">
+        <CardContent className="p-3 sm:p-4">
+          <CardTitle className="text-base sm:text-lg font-semibold mb-2 text-foreground dark:text-white line-clamp-2">
             {product.title}
           </CardTitle>
-          <p className="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4">
+          <p className="text-xs text-gray-600 mb-2 sm:mb-3 line-clamp-2">
             {product.shooter.shortDescription}
           </p>
-          <div className="flex flex-wrap items-baseline mb-3 sm:mb-4">
-            <span className="text-xl sm:text-2xl font-bold text-primary mr-2">
+          <div className="flex flex-wrap items-baseline mb-2 sm:mb-3">
+            <span className="text-lg sm:text-xl font-bold text-primary mr-2">
               $
               {product.shooter.promotionalPrice || product.shooter.regularPrice}
             </span>
             {product.shooter.promotionalPrice && (
               <>
-                <span className="text-xs sm:text-sm text-gray-500 line-through mr-2">
+                <span className="text-xs text-gray-500 line-through mr-2">
                   ${product.shooter.regularPrice}
                 </span>
-                <Badge variant="destructive" className="text-xs sm:text-sm">
+                <Badge variant="destructive" className="text-xs">
                   {discountPercentage}% OFF
                 </Badge>
               </>
             )}
           </div>
-          <p className="text-xs sm:text-sm text-gray-700">
+          <p className="text-xs text-gray-700 line-clamp-3">
             {product.description}
           </p>
         </CardContent>
-        <CardFooter className="p-4 sm:p-6">
+        <CardFooter className="p-3 sm:p-4">
           <Button
-            className="w-full text-sm sm:text-base"
+            className="w-full text-xs sm:text-sm"
             onClick={handleAddToCart}
           >
-            <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart
+            <ShoppingCart className="mr-2 h-3 w-3 sm:h-4 sm:w-4" /> Add to Cart
           </Button>
         </CardFooter>
       </Card>

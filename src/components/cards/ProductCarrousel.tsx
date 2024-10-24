@@ -37,19 +37,21 @@ export function ProductCarousel({
   }, []);
 
   const renderProductCard = (relatedProduct: RelatedProduct) => (
-    <Card>
-      <CardContent className="flex flex-col items-center p-4 sm:p-6">
-        <ImageWithFallback
-          src={relatedProduct.images[0]}
-          alt={relatedProduct.name}
-          width={300}
-          height={300}
-          className="w-full h-24 sm:h-32 object-cover mb-3 sm:mb-4 rounded-md"
-        />
-        <h5 className="text-xs sm:text-sm font-semibold text-center mb-2">
+    <Card className="w-full max-w-[240px] mx-auto overflow-hidden rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:scale-[1.02]">
+      <CardContent className="flex flex-col items-center p-3 sm:p-4">
+        <div className="relative w-[200px] h-[200px] mb-2 sm:mb-3">
+          <ImageWithFallback
+            src={relatedProduct.images[0]}
+            alt={relatedProduct.name}
+            width={300}
+            height={300}
+            className="w-full h-24 sm:h-32 object-cover mb-3 sm:mb-4 rounded-md"
+          />
+        </div>
+        <h5 className="text-xs sm:text-sm font-semibold text-center mb-1 sm:mb-2 line-clamp-2 px-2">
           {relatedProduct.name}
         </h5>
-        <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">
+        <p className="text-xs sm:text-sm text-gray-500 mb-2 sm:mb-3 text-center">
           $
           {(
             relatedProduct.promotionalPrice || relatedProduct.regularPrice
@@ -63,7 +65,10 @@ export function ProductCarousel({
           <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1" /> Agregar
         </Button>
         {relatedProduct.availableStock <= 5 && (
-          <p className="text-[10px] sm:text-xs text-red-500 mt-2">
+          <p
+            className="text-[10px] sm:text-xs text-red-500 mt-2 text-center w-full"
+            aria-live="polite"
+          >
             ¡ÚLTIMAS UNIDADES!
           </p>
         )}
