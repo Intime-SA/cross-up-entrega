@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import ProductsPage from "@/app/page";
+import ProductsPage from "@/app/page"; // Asegúrate de que esta ruta sea correcta
 import { getProducts } from "@/data/api/products";
 
 // Mock de la función getProducts
@@ -20,7 +20,7 @@ describe("ProductsPage", () => {
 
     // Verifica que el h1 se renderiza con el texto correcto
     const headingElement = screen.getByRole("heading", {
-      name: /Product List/i,
+      name: /WOKI > APP/i, // Usa una expresión regular para coincidir con el texto
     });
     expect(headingElement).toBeInTheDocument();
 

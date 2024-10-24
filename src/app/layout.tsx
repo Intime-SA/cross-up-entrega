@@ -4,6 +4,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import CartComponent from "@/components/cart/CartComponent";
 import { ReduxProvider } from "@/redux/ReduxProvider";
 import { ThemeProvider } from "@/components/providers/providers";
+import { montserrat } from "./fonts/fonts";
 
 export const metadata: Metadata = {
   title: "Challenge CROSS up",
@@ -16,8 +17,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen font-sans bg-background text-foreground">
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${montserrat.variable} font-sans`}
+    >
+      <body
+        className={`min-h-screen font-sans bg-background text-foreground ${montserrat.variable} font-sans`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
