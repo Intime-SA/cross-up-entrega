@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ShoppingCart, Plus, Check, Clock } from "lucide-react";
+import { ShoppingCart, Check, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
