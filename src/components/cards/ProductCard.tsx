@@ -41,16 +41,14 @@ export default function ProductCard({ product }: ProductCardProps) {
     setIsLoaded(true);
   }, []);
 
-  useEffect(() => {
-    console.log("Current cart state:", cartItems);
-  }, [cartItems]);
-
   const discountPercentage = product.shooter.promotionalPrice
     ? Math.round(
         (1 - product.shooter.promotionalPrice / product.shooter.regularPrice) *
           100
       )
     : 0;
+
+  // Funcion para agregar al carrito en state global redux
   const handleAddToCart = () => {
     dispatch(
       addToCart({
@@ -66,7 +64,10 @@ export default function ProductCard({ product }: ProductCardProps) {
       dispatch(startGlobalTimer(600)); // Comienza el temporizador con 5 minutos
     }
 
+    // Abrir el popUp, luego de agregar al carrito.
     setIsPopupOpen(true);
+
+    // Notificacion sweetAlert para info de agregar al carrito.
     MySwal.fire({
       icon: "success",
       title: "Producto añadido al carrito",
@@ -84,6 +85,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     });
   };
 
+  // Funcion para agregar al carrito en state global redux, desde un producto recomendado.
   const handleAddRelatedProduct = (relatedProduct: RelatedProduct) => {
     dispatch(
       addToCart({
@@ -111,6 +113,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     setIsPopupOpen(false);
   };
 
+  // mientras carga, renderizar skeleton Cards
   if (!isLoaded) {
     return <ProductCardSkeleton />;
   }
@@ -216,7 +219,6 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
             <div className="flex items-center justify-center text-xs sm:text-sm text-blue-600 mb-2 mt-4 px-4 sm:px-0">
               <Clock className="mr-1 w-3 h-3 sm:w-4 sm:h-4" />
-
               <TimerComponent />
             </div>
             <div className="mt-4 px-4 sm:px-0">
