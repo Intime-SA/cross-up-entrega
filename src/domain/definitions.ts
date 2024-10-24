@@ -75,3 +75,8 @@ export interface ImageWithFallbackProps {
   height: number;
   className?: string;
 }
+
+export interface TimerState {
+  timeLeft: number;
+  isRunning: boolean;
+}

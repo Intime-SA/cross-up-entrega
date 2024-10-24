@@ -26,10 +26,11 @@ import withReactContent from "sweetalert2-react-content";
 import { ProductCardProps, RelatedProduct } from "@/domain/definitions";
 import Image from "next/image";
 import { ProductCarousel } from "./ProductCarrousel";
+import TimerComponent from "../timer/TimerComponent";
+import { startGlobalTimer } from "@/redux/features/timerSlice";
 
 export default function ProductCard({ product }: ProductCardProps) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -43,24 +44,6 @@ export default function ProductCard({ product }: ProductCardProps) {
   useEffect(() => {
     console.log("Current cart state:", cartItems);
   }, [cartItems]);
-
-  useEffect(() => {
-    if (!isPopupOpen) return;
-
-    const timer = setInterval(() => {
-      setTimeLeft((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [isPopupOpen]);
-
-  const formatTime = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes.toString().padStart(2, "0")}:${remainingSeconds
-      .toString()
-      .padStart(2, "0")}`;
-  };
 
   const discountPercentage = product.shooter.promotionalPrice
     ? Math.round(
@@ -77,6 +60,12 @@ export default function ProductCard({ product }: ProductCardProps) {
         quantity: 1,
       })
     );
+
+    // SI EL CARRITO ESTA VACIO AL MOMENTO DE HACER UN addToCart(), SE INCIA EL CONTADOR
+    if (cartItems.length === 0) {
+      dispatch(startGlobalTimer(600)); // Comienza el temporizador con 5 minutos
+    }
+
     setIsPopupOpen(true);
     MySwal.fire({
       icon: "success",
@@ -227,7 +216,8 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
             <div className="flex items-center justify-center text-xs sm:text-sm text-blue-600 mb-2 mt-4 px-4 sm:px-0">
               <Clock className="mr-1 w-3 h-3 sm:w-4 sm:h-4" />
-              <h6>Queda poco tiempo... {formatTime(timeLeft)}!</h6>
+
+              <TimerComponent />
             </div>
             <div className="mt-4 px-4 sm:px-0">
               <ProductCarousel
