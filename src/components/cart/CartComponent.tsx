@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -97,7 +97,7 @@ export default function CartComponent() {
                   size="sm"
                   onClick={() => dispatch(removeFromCart(item.id))}
                 >
-                  Remove
+                  <Trash className="m-1" /> {/* Agrega el ícono de papelera */}
                 </Button>
               </div>
             </div>

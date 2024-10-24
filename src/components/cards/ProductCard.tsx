@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ShoppingCart, Plus, Check } from "lucide-react";
+import { ShoppingCart, Plus, Check, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -135,7 +135,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     <>
       <Card className="w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-md transition-transform duration-300 hover:shadow-2xl hover:scale-105 flex flex-col justify-between h-full">
         <CardHeader className="p-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
-          <div className="relative h-64 w-full">
+          <div className="relative h-48 sm:h-64 w-full">
             <img
               src={product.shooter.images[0]}
               alt={`${product.shooter.name}`}
@@ -143,132 +143,144 @@ export default function ProductCard({ product }: ProductCardProps) {
             />
           </div>
         </CardHeader>
-        <CardContent className="p-6">
-          <CardTitle className="text-xl font-semibold mb-2 text-foreground dark:text-white">
+        <CardContent className="p-4 sm:p-6">
+          <CardTitle className="text-lg sm:text-xl font-semibold mb-2 text-foreground dark:text-white">
             {product.title}
           </CardTitle>
-          <p className="text-sm text-gray-600 mb-4">
+          <p className="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4">
             {product.shooter.shortDescription}
           </p>
-          <div className="flex items-baseline mb-4">
-            <span className="text-2xl font-bold text-primary">
+          <div className="flex flex-wrap items-baseline mb-3 sm:mb-4">
+            <span className="text-xl sm:text-2xl font-bold text-primary mr-2">
               $
               {product.shooter.promotionalPrice || product.shooter.regularPrice}
             </span>
             {product.shooter.promotionalPrice && (
               <>
-                <span className="ml-2 text-sm text-gray-500 line-through">
+                <span className="text-xs sm:text-sm text-gray-500 line-through mr-2">
                   ${product.shooter.regularPrice}
                 </span>
-                <Badge variant="destructive" className="ml-2">
+                <Badge variant="destructive" className="text-xs sm:text-sm">
                   {discountPercentage}% OFF
                 </Badge>
               </>
             )}
           </div>
-          <p className="text-sm text-gray-700">{product.description}</p>
+          <p className="text-xs sm:text-sm text-gray-700">
+            {product.description}
+          </p>
         </CardContent>
-        <CardFooter>
-          <Button className="w-full" onClick={handleAddToCart}>
+        <CardFooter className="p-4 sm:p-6">
+          <Button
+            className="w-full text-sm sm:text-base"
+            onClick={handleAddToCart}
+          >
             <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart
           </Button>
         </CardFooter>
       </Card>
 
       <Dialog open={isPopupOpen} onOpenChange={setIsPopupOpen}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle className="flex items-center text-green-600">
-              <Check className="mr-2 h-5 w-5" /> Producto añadido al carrito
-            </DialogTitle>
-          </DialogHeader>
-          <div className="mt-4 border-b pb-4">
-            <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0">
-                <img
-                  src={product.shooter.images[0]}
-                  alt={product.title}
-                  className="h-24 w-24 rounded-md object-cover"
-                />
-              </div>
-              <div className="flex-grow">
-                <h3 className="text-xl font-semibold mb-2 text-foreground dark:text-white">
-                  {product.title}
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">
-                  {product.shooter.shortDescription}
-                </p>
-                <div className="mt-2 flex items-center">
-                  <span className="text-xl font-bold text-primary">
-                    $
-                    {product.shooter.promotionalPrice ||
-                      product.shooter.regularPrice}
-                  </span>
-                  {product.shooter.promotionalPrice && (
-                    <Badge variant="secondary" className="ml-2">
-                      {discountPercentage}% OFF
-                    </Badge>
+        <DialogContent className="w-full h-full sm:h-auto sm:w-[90vw] sm:max-w-[425px] md:max-w-[600px] lg:max-w-[800px] p-0 sm:p-6">
+          <div className="h-full sm:h-auto overflow-y-auto">
+            <DialogHeader className="p-4 sm:p-0">
+              <DialogTitle className="flex items-center text-green-600 text-lg sm:text-xl">
+                <Check className="mr-2 h-5 w-5" /> Producto añadido al carrito
+              </DialogTitle>
+            </DialogHeader>
+            <div className="mt-4 border-b pb-4 px-4 sm:px-0">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-4">
+                <div className="flex-shrink-0">
+                  <img
+                    src={product.shooter.images[0]}
+                    alt={product.title}
+                    className="h-24 w-24 sm:h-32 sm:w-32 rounded-md object-cover"
+                  />
+                </div>
+                <div className="flex-grow text-center sm:text-left">
+                  <h3 className="text-lg sm:text-xl font-semibold mb-2 text-foreground dark:text-white">
+                    {product.title}
+                  </h3>
+                  <p className="mt-1 text-xs sm:text-sm text-gray-500">
+                    {product.shooter.shortDescription}
+                  </p>
+                  <div className="mt-2 flex items-center justify-center sm:justify-start">
+                    <span className="text-lg sm:text-xl font-bold text-primary">
+                      $
+                      {product.shooter.promotionalPrice ||
+                        product.shooter.regularPrice}
+                    </span>
+                    {product.shooter.promotionalPrice && (
+                      <Badge
+                        variant="secondary"
+                        className="ml-2 text-xs sm:text-sm"
+                      >
+                        {discountPercentage}% OFF
+                      </Badge>
+                    )}
+                  </div>
+                  {product.shooter.name && (
+                    <p className="mt-1 text-xs sm:text-sm text-gray-500">
+                      Modelo: {product.shooter.name}
+                    </p>
                   )}
                 </div>
-                {product.shooter.name && (
-                  <p className="mt-1 text-sm text-gray-500">
-                    Modelo: {product.shooter.name}
-                  </p>
-                )}
               </div>
             </div>
-          </div>
-          <div className="mt-4">
-            <h4 className="font-semibold mb-2">Combina perfectamente con</h4>
-            <div className="text-sm text-blue-600 mb-2">
-              {formatTime(timeLeft)}
+            <div className="flex items-center justify-center text-xs sm:text-sm text-blue-600 mb-2 mt-4 px-4 sm:px-0">
+              <Clock className="mr-1 w-3 h-3 sm:w-4 sm:h-4" />
+              <h6>Queda poco tiempo... {formatTime(timeLeft)}!</h6>
             </div>
-            <Carousel className="w-full max-w-xs mx-auto">
-              <CarouselContent>
-                {product.products.map((relatedProduct) => (
-                  <CarouselItem key={relatedProduct.id}>
-                    <div className="p-1">
-                      <Card>
-                        <CardContent className="flex flex-col items-center p-6">
-                          <ImageWithFallback
-                            src={relatedProduct.images[0]}
-                            alt={relatedProduct.name}
-                            className="w-full h-32 object-cover mb-4 rounded-md"
-                          />
-
-                          <h5 className="text-sm font-semibold text-center mb-2">
-                            {relatedProduct.name}
-                          </h5>
-                          <p className="text-sm text-gray-500 mb-4">
-                            $
-                            {(
-                              relatedProduct.promotionalPrice ||
-                              relatedProduct.regularPrice
-                            ).toFixed(2)}
-                          </p>
-                          <Button
-                            size="sm"
-                            className="w-full"
-                            onClick={() =>
-                              handleAddRelatedProduct(relatedProduct)
-                            }
-                          >
-                            <Plus className="w-4 h-4 mr-1" /> Agregar
-                          </Button>
-                          {relatedProduct.availableStock <= 5 && (
-                            <p className="text-xs text-red-500 mt-2">
-                              ¡ÚLTIMAS UNIDADES!
+            <div className="mt-4 px-4 sm:px-0">
+              <Carousel className="w-full max-w-[250px] sm:max-w-xs md:max-w-sm lg:max-w-md mx-auto">
+                <CarouselContent>
+                  {product.products.map((relatedProduct) => (
+                    <CarouselItem key={relatedProduct.id}>
+                      <div className="p-1">
+                        <Card>
+                          <CardContent className="flex flex-col items-center p-4 sm:p-6">
+                            <ImageWithFallback
+                              src={relatedProduct.images[0]}
+                              alt={relatedProduct.name}
+                              className="w-full h-24 sm:h-32 object-cover mb-3 sm:mb-4 rounded-md"
+                            />
+                            <h5 className="text-xs sm:text-sm font-semibold text-center mb-2">
+                              {relatedProduct.name}
+                            </h5>
+                            <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">
+                              $
+                              {(
+                                relatedProduct.promotionalPrice ||
+                                relatedProduct.regularPrice
+                              ).toFixed(2)}
                             </p>
-                          )}
-                        </CardContent>
-                      </Card>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel>
+                            <Button
+                              size="sm"
+                              className="w-full text-xs sm:text-sm"
+                              onClick={() =>
+                                handleAddRelatedProduct(relatedProduct)
+                              }
+                            >
+                              <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />{" "}
+                              Agregar
+                            </Button>
+                            {relatedProduct.availableStock <= 5 && (
+                              <p className="text-[10px] sm:text-xs text-red-500 mt-2">
+                                ¡ÚLTIMAS UNIDADES!
+                              </p>
+                            )}
+                          </CardContent>
+                        </Card>
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <div className="hidden md:block">
+                  <CarouselPrevious />
+                  <CarouselNext />
+                </div>
+              </Carousel>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
